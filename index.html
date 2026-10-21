@@ -2,51 +2,25 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ウラヨミ！ - 15秒でニュースの「裏」が見抜けるタイムライン</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>てらこやニュース</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app-shell">
-    <!-- Sticky Header -->
     <header class="app-header">
-      <div class="header-top">
-        <div class="brand">
-          <span class="brand-badge">⚡ 15秒ニュース</span>
-          <h1 class="brand-title">ウラヨミ！</h1>
-        </div>
-        <div class="header-meta" id="edition-badge">
-          毎朝 5:00 更新
-        </div>
-      </div>
-      <!-- Category Filter Tabs (SmartNews / X style) -->
-      <nav class="category-bar" id="category-bar" aria-label="カテゴリ">
-        <button class="cat-pill active" data-filter="all">🔥 今日の3本</button>
-        <button class="cat-pill" data-filter="ゲーム・勉強">🎮 ゲーム・勉強</button>
-        <button class="cat-pill" data-filter="街・テクノロジー">🛴 街・テクノロジー</button>
-        <button class="cat-pill" data-filter="環境・ルール">🌱 環境・ルール</button>
-      </nav>
+      <h1 class="brand-title">てらこやニュース</h1>
+      <span class="header-date" id="edition-badge">10月21日（水）</span>
     </header>
 
-    <!-- Intro Banner (Minimal, zero preachy vibe) -->
-    <div class="sub-banner">
-      <span>👀 流し見するだけで「大人のニュースのトリック」が見抜けるタイムライン</span>
-    </div>
-
-    <!-- Main Timeline Feed -->
     <main class="timeline" id="timeline">
-      <!-- Cards injected by app.js -->
+      <!-- Cards rendered by app.js -->
     </main>
 
-    <!-- Footer Info for Morning Batch -->
     <footer class="app-footer">
-      <p>⏰ 毎朝5:00に最新トピックを自動ピック＆配信</p>
-      <p class="footer-sub">書かれていることをそのまま信じるな。分母・因果・副作用を疑おう。</p>
+      <p>てらこやニュース — 毎朝 5:00 更新</p>
     </footer>
   </div>
-
-  <!-- Toast Notification for Copy -->
-  <div id="toast" class="toast" aria-live="polite">📋 ドヤ顔フレーズをコピーしました！</div>
 
   <script src="app.js"></script>
 </body>
