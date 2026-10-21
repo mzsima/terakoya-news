@@ -1,0 +1,35 @@
+name: Daily 5AM News Batch (ウラヨミ！)
+
+on:
+  schedule:
+    # 毎日 20:00 UTC = 日本時間 翌朝 05:00 JST に自動実行
+    - cron: "0 20 * * *"
+  workflow_dispatch: # 手動テスト実行ボタンも有効化
+
+permissions:
+  contents: write
+
+jobs:
+  update-daily-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate today's 3 topics via Gemini API
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/generate_daily_articles.mjs
+
+      - name: Commit and push updated articles.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/articles.json
+          git diff --staged --quiet || git commit -m "chore: update daily news articles (5AM batch)"
+          git push
