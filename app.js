@@ -1,117 +1,57 @@
 const FALLBACK_DATA = {
-  updatedAt: "2026-10-21T17:15:00+09:00",
-  edition: "10月21日（水）",
-  articles: [
+  updatedAt: "2026-10-25T10:03:00+09:00",
+  edition: "10月25日（日）",
+  editions: [
     {
-      id: "game-time-limit-grades",
-      category: "ゲーム・勉強",
-      categoryIcon: "🎮",
-      surfaceNews: {
-        headline: "「スマホゲームは1日1時間まで！」制限した中学生のテスト平均点が12点アップ",
-        summary: [
-          "ある自治体の調査で、スマホゲームを「1日1時間以内」に制限している生徒は、制限なしの生徒よりテストの平均点が12点高いことが判明。",
-          "専門家は「ゲーム時間を減らせば、そのまま勉強時間が増えて成績が上がる」と分析。",
-          "地域全体で「ゲーム1日1時間ルール」を推奨する動きが広がっています。"
-        ]
-      },
-      oneLineTsukkomi: {
-        badge: "ちょっと待って！",
-        text: "「ゲームを減らしたから成績が上がった」って決めつけてない？『順番が逆』や『別の理由』が隠れてるかも。"
-      },
-      hiddenPerspectives: {
-        dataBlindspot: {
-          title: "📊 データの死角（因果と相関の混同）",
-          points: [
-            "もともと勉強習慣があって塾に通っている子が、結果的にゲーム時間が短いだけかもしれない（原因と結果が逆）。",
-            "「家庭でルールを話し合える環境」や「教育にかけられる費用」など、ゲーム以外の『隠れた要因』が成績に影響している可能性が抜けている。"
-          ]
-        },
-        counterLogic: {
-          title: "🔍 構造の裏側・副作用",
-          points: [
-            "「ゲームさえ禁止すれば成績が上がる」と単純化すると、本当は必要な「勉強のやり方のサポート」が見落とされてしまう。",
-            "納得感のないまま一律にスマホを取り上げると、親に隠れて夜中に遊ぶようになるなど逆効果が起きやすい。"
-          ]
+      updatedAt: "2026-10-25T10:03:00+09:00",
+      edition: "10月25日（日）",
+      articles: [
+        {
+          id: "classical-music-bgm-grades",
+          category: "学習・データ",
+          categoryIcon: "🎧",
+          surfaceNews: {
+            headline: "「勉強中に『集中力アップBGM・自然音』を流す子は成績が良い！」調査結果から作業用プレイリストが小中高生に大流行",
+            summary: [
+              "学習アプリの調査で、普段の勉強中に「雨の音（環境音）やクラシック音楽」を流している生徒は、無音で勉強する生徒よりも学習時間が長く、テストの平均点も高いという結果が発表されました。",
+              "これを受け、「聴くだけで脳が集中モードになる勉強用BGM」の配信や専用イヤホンが人気を集めています。",
+              "「まずは形から勉強部屋の音楽環境を整えよう」という特集も広がっています。"
+            ]
+          },
+          oneLineTsukkomi: {
+            badge: "ちょっと待って！",
+            text: "「BGMを流したから頭が良くなった」の？それとも『自分の集中できる環境を工夫している意欲の高い子』がBGMを使っているだけ？"
+          },
+          hiddenPerspectives: {
+            dataBlindspot: {
+              title: "📊 データの死角（因果と相関の混同）",
+              points: [
+                "環境音やクラシックを選んでいる層は、そもそも「スマホの通知や歌詞のある曲だと集中が切れる」と自分で気づき、学習環境をコントロールしている自律性の高い生徒が多い（隠れた前提条件）。",
+                "また、暗記や長文読解のときは「どんな音楽でも脳の言語処理メモリ（ワーキングメモリ）を奪うため、無音の方が定着率が高い」という認知心理学の実験結果が平均値の裏で消えている。"
+              ]
+            },
+            counterLogic: {
+              title: "🔍 構造の裏側・副作用",
+              points: [
+                "「BGMさえ流せば集中できる」と誤解して、お気に入りのJ-POPや動画の音声を流しながら勉強すると、脳は音楽と文字の間で高速の切り替え（マルチタスク）を強いられ、かえって疲れやすくなる。",
+                "音楽配信サービスやイヤホンメーカーにとっては「勉強中もずっと再生し続けてもらう」方が再生回数や売上が伸びるため、都合の良いデータだけが強調されやすい。"
+              ]
+            }
+          },
+          poll: {
+            doyaPhrase: "「『勉強用BGMを流すと成績が上がる』って言うけど、音楽のおかげで頭が良くなったんじゃなくて、そもそも『スマホの誘惑を断って集中環境を作れる子』が環境音を選んでるだけじゃない？」"
+          }
         }
-      },
-      poll: {
-        doyaPhrase: "「それ、『ゲームを減らしたから頭が良くなった』んじゃなくて、『もともと勉強する環境がある子がゲームしてない』だけじゃない？」"
-      }
-    },
-    {
-      id: "electric-mobility-deregulation",
-      category: "街・ルール",
-      categoryIcon: "🛴",
-      surfaceNews: {
-        headline: "電動キックボード、16歳以上は「免許なし・ヘルメット努力義務」で解禁！次世代のエコな移動手段として拡大",
-        summary: [
-          "法改正により、16歳以上なら運転免許がなくても、ヘルメット着用が「努力義務（かぶらなくても罰則なし）」で電動キックボードに乗れるようになりました。",
-          "推進する事業者や関係省庁は「最高速度20km以下で自転車と同じ感覚で乗れる、環境にやさしい新しい移動インフラになる」とアピールしています。",
-          "駅前や街中にレンタル用のポートが急速に増え、利用エリアが拡大しています。"
-        ]
-      },
-      oneLineTsukkomi: {
-        badge: "ちょっと待って！",
-        text: "車や歩行者のすぐ横を走るのに、なぜ「交通ルールを知らない無免許＆ノーヘル」でOKなんて危ないルールが通ったの？"
-      },
-      hiddenPerspectives: {
-        dataBlindspot: {
-          title: "📊 データの死角（見せかけの安全性）",
-          points: [
-            "「最高速度20kmだから自転車と同じ」と言われるが、タイヤが小さく重心が不安定なため、わずかな段差での単独転倒や頭部を強く打つリスクは自転車と全く異なる。",
-            "日本より先に解禁したフランスのパリやオーストラリアのメルボルンでは、重大事故や歩道走行が社会問題になり、すでに「レンタル全面禁止」へ逆戻りしている事実が伏せられがち。"
-          ]
-        },
-        counterLogic: {
-          title: "🔍 構造の裏側（なぜ許可されたのか？）",
-          points: [
-            "実験段階で「原付免許必須・ヘルメット義務」だった頃は利用者が伸びずビジネスとして赤字になるため、事業者団体が「新産業の育成」を掲げて規制緩和を強く働きかけた背景がある。",
-            "「手軽に乗れる利益」はシェア事業者が得る一方で、「事故のリスクや恐怖」は歩行者や周囲のドライバーに押し付けられる構造になっている。"
-          ]
-        }
-      },
-      poll: {
-        doyaPhrase: "「『便利だから規制を緩めました』って言うけど、先に導入したパリが危なすぎて禁止にしたものを、なんで日本は逆に緩くしちゃったの？」"
-      }
-    },
-    {
-      id: "cultural-capital-overtourism",
-      category: "文化・地域（CQ）",
-      categoryIcon: "⛩️",
-      surfaceNews: {
-        headline: "古い街並みを「稼げる観光スポット」に大改造！外国人観光客と売上が過去最高を更新",
-        summary: [
-          "歴史ある地方の城下町で、古い商店街や路地を観光客向けの食べ歩きスポットやホテルに作り変える再開発が進み、観光売上が過去最高を記録しました。",
-          "メディアは「寂れていた地域がインバウンド（外国人旅行者）の力で生まれ変わった成功モデル」として連日特集しています。",
-          "他の自治体もこの成功に続けと、伝統的な祭りや街並みを観光客向けにイベント化する動きを加速させています。"
-        ]
-      },
-      oneLineTsukkomi: {
-        badge: "ちょっと待って！",
-        "text": "目先の売上は増えたけど、何百年もかけて地域が守ってきた「暮らしや文化の土台」を切り売りして使い捨てにしてない？"
-      },
-      hiddenPerspectives: {
-        dataBlindspot: {
-          title: "📊 データの死角（お金に換算されない損失）",
-          points: [
-            "「観光売上が過去最高」という数字の裏で、家賃や物価が高騰し、その街の空気を作っていた地元の豆腐屋や職人、住民が住めなくなって街を去っている損失が計算に入っていない。",
-            "外部の資本（大手チェーンや投資会社）が利益の多くを持ち帰り、混雑やゴミ、生活環境の悪化という負担だけが地元の人に残る構造が隠れている。"
-          ]
-        },
-        counterLogic: {
-          title: "🔍 文化の本質（CQ：なぜ切り売りに気づくべきか？）",
-          points: [
-            "世界中の人が日本の地域に惹かれる本当の理由は、テーマパークのような派手さではなく「そこに住む人たちが何世代も大切にしてきた静けさ・礼節・本物の暮らし」にある。",
-            "目先のお金のためにその土壌を壊して「どこにでもある観光地」に変えてしまえば、一番の価値だった『本物の日本文化』が消え、やがて誰からも見向きされなくなる。"
-          ]
-        }
-      },
-      poll: {
-        doyaPhrase: "「それって新しく価値を生んだんじゃなくて、昔の人が何百年もかけて貯めてきた『文化の貯金』を切り崩して、目先の現金に換えてるだけじゃない？」"
-      }
+      ]
     }
   ]
 };
+
+const EDITIONS_PER_BATCH = 2; // 最初は2日分（6記事）を描画し、スクロールに合わせて過去分を自動追加
+let allEditions = [];
+let renderedEditionCount = 0;
+let editionObserver = null;
+let sentinelObserver = null;
 
 async function loadArticles() {
   try {
@@ -123,72 +63,182 @@ async function loadArticles() {
   }
 }
 
-function renderTimeline(articles) {
-  const timelineEl = document.getElementById("timeline");
-  timelineEl.innerHTML = "";
+function normalizeEditions(data) {
+  if (Array.isArray(data.editions) && data.editions.length > 0) {
+    return data.editions;
+  }
+  if (Array.isArray(data.articles) && data.articles.length > 0) {
+    return [
+      {
+        updatedAt: data.updatedAt || "",
+        edition: data.edition || "",
+        articles: data.articles
+      }
+    ];
+  }
+  return [];
+}
 
-  articles.forEach((article) => {
-    const card = document.createElement("article");
-    card.className = "news-card";
+function createArticleCard(article) {
+  const card = document.createElement("article");
+  card.className = "news-card";
 
-    const summaryItems = article.surfaceNews.summary
-      .map((line) => `<li>${line}</li>`)
-      .join("");
+  const summaryItems = (article.surfaceNews.summary || [])
+    .map((line) => `<li>${line}</li>`)
+    .join("");
 
-    const blindspotItems = article.hiddenPerspectives.dataBlindspot.points
-      .map((p) => `<li>${p}</li>`)
-      .join("");
+  const blindspotItems = (article.hiddenPerspectives.dataBlindspot.points || [])
+    .map((p) => `<li>${p}</li>`)
+    .join("");
 
-    const counterItems = article.hiddenPerspectives.counterLogic.points
-      .map((p) => `<li>${p}</li>`)
-      .join("");
+  const counterItems = (article.hiddenPerspectives.counterLogic.points || [])
+    .map((p) => `<li>${p}</li>`)
+    .join("");
 
-    card.innerHTML = `
-      <section class="section-surface">
-        <div class="card-category">${article.categoryIcon || ""} ${article.category}</div>
-        <h2 class="surface-headline">${article.surfaceNews.headline}</h2>
-        <ul class="surface-summary">
-          ${summaryItems}
+  card.innerHTML = `
+    <section class="section-surface">
+      <div class="card-category">${article.categoryIcon || ""} ${article.category}</div>
+      <h2 class="surface-headline">${article.surfaceNews.headline}</h2>
+      <ul class="surface-summary">
+        ${summaryItems}
+      </ul>
+    </section>
+
+    <section class="section-tsukkomi">
+      <div class="tsukkomi-label">💡 ${article.oneLineTsukkomi.badge}</div>
+      <p class="tsukkomi-text">${article.oneLineTsukkomi.text}</p>
+    </section>
+
+    <section class="section-perspectives">
+      <div class="perspective-block">
+        <div class="perspective-title">${article.hiddenPerspectives.dataBlindspot.title}</div>
+        <ul class="perspective-list">
+          ${blindspotItems}
         </ul>
-      </section>
+      </div>
+      <div class="perspective-block">
+        <div class="perspective-title">${article.hiddenPerspectives.counterLogic.title}</div>
+        <ul class="perspective-list">
+          ${counterItems}
+        </ul>
+      </div>
+    </section>
 
-      <section class="section-tsukkomi">
-        <div class="tsukkomi-label">💡 ${article.oneLineTsukkomi.badge}</div>
-        <p class="tsukkomi-text">${article.oneLineTsukkomi.text}</p>
-      </section>
+    <section class="section-takeaway">
+      <div class="takeaway-label">💬 視点が変わる一言</div>
+      <p class="takeaway-phrase">${article.poll.doyaPhrase}</p>
+    </section>
+  `;
 
-      <section class="section-perspectives">
-        <div class="perspective-block">
-          <div class="perspective-title">${article.hiddenPerspectives.dataBlindspot.title}</div>
-          <ul class="perspective-list">
-            ${blindspotItems}
-          </ul>
-        </div>
-        <div class="perspective-block">
-          <div class="perspective-title">${article.hiddenPerspectives.counterLogic.title}</div>
-          <ul class="perspective-list">
-            ${counterItems}
-          </ul>
-        </div>
-      </section>
+  return card;
+}
 
-      <section class="section-takeaway">
-        <div class="takeaway-label">💬 視点が変わる一言</div>
-        <p class="takeaway-phrase">${article.poll.doyaPhrase}</p>
-      </section>
-    `;
+function createEditionSection(editionObj, index) {
+  const section = document.createElement("section");
+  section.className = "edition-group";
+  const cleanLabel = (editionObj.edition || "").replace("朝刊エディション", "").trim();
+  section.dataset.edition = cleanLabel;
 
-    timelineEl.appendChild(card);
+  // 2日目（昨日）以降の先頭には、スクロール中にひと目でわかる日付区切りを表示
+  if (index > 0) {
+    const divider = document.createElement("div");
+    divider.className = "edition-divider";
+    divider.innerHTML = `<span class="edition-divider-pill">📅 ${cleanLabel}のニュース</span>`;
+    section.appendChild(divider);
+  }
+
+  const cardsContainer = document.createElement("div");
+  cardsContainer.className = "edition-cards";
+
+  (editionObj.articles || []).forEach((article) => {
+    cardsContainer.appendChild(createArticleCard(article));
   });
+
+  section.appendChild(cardsContainer);
+  return section;
+}
+
+function renderNextBatch() {
+  const timelineEl = document.getElementById("timeline");
+  if (!timelineEl || renderedEditionCount >= allEditions.length) return;
+
+  const nextSlice = allEditions.slice(
+    renderedEditionCount,
+    renderedEditionCount + EDITIONS_PER_BATCH
+  );
+
+  nextSlice.forEach((editionObj, i) => {
+    const globalIndex = renderedEditionCount + i;
+    const section = createEditionSection(editionObj, globalIndex);
+    timelineEl.appendChild(section);
+    if (editionObserver) {
+      editionObserver.observe(section);
+    }
+  });
+
+  renderedEditionCount += nextSlice.length;
+}
+
+function setupScrollObservers() {
+  const editionBadge = document.getElementById("edition-badge");
+  const sentinel = document.getElementById("scroll-sentinel");
+
+  // スクロール位置に合わせて上部の日付バッジを現在読んでいる日の日付に連動
+  if ("IntersectionObserver" in window && editionBadge) {
+    editionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target.dataset.edition) {
+            editionBadge.textContent = entry.target.dataset.edition;
+          }
+        });
+      },
+      {
+        rootMargin: "-15% 0px -75% 0px",
+        threshold: 0
+      }
+    );
+  }
+
+  // 下端が近づいたら過去のアーカイブを自動で継ぎ足す（無限スクロール）
+  if ("IntersectionObserver" in window && sentinel) {
+    sentinelObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0] && entries[0].isIntersecting) {
+          renderNextBatch();
+        }
+      },
+      {
+        rootMargin: "0px 0px 600px 0px"
+      }
+    );
+    sentinelObserver.observe(sentinel);
+  } else {
+    // IntersectionObserver非対応環境では全件一括描画
+    while (renderedEditionCount < allEditions.length) {
+      renderNextBatch();
+    }
+  }
 }
 
 async function init() {
   const data = await loadArticles();
+  allEditions = normalizeEditions(data);
+
   const editionBadge = document.getElementById("edition-badge");
-  if (data.edition && editionBadge) {
-    editionBadge.textContent = data.edition.replace("朝刊エディション", "").trim();
+  if (allEditions.length > 0 && editionBadge) {
+    editionBadge.textContent = (allEditions[0].edition || "")
+      .replace("朝刊エディション", "")
+      .trim();
   }
-  renderTimeline(data.articles || []);
+
+  const timelineEl = document.getElementById("timeline");
+  if (timelineEl) {
+    timelineEl.innerHTML = "";
+  }
+
+  setupScrollObservers();
+  renderNextBatch();
 }
 
 document.addEventListener("DOMContentLoaded", init);

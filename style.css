@@ -67,7 +67,54 @@ body {
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
+  gap: 28px;
+}
+
+.edition-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edition-cards {
+  display: flex;
+  flex-direction: column;
   gap: 24px;
+}
+
+/* 過去日の区切り線（Xタイムライン風） */
+.edition-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0 4px;
+  position: relative;
+}
+
+.edition-divider::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+  background: #d1d5db;
+  z-index: 1;
+}
+
+.edition-divider-pill {
+  position: relative;
+  z-index: 2;
+  background: #e5e7eb;
+  color: #374151;
+  font-size: 12.5px;
+  font-weight: 800;
+  padding: 5px 16px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.scroll-sentinel {
+  height: 4px;
 }
 
 /* Clean News Card */
