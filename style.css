@@ -45,8 +45,16 @@ body {
   border-bottom: 1px solid var(--border-subtle);
   padding: 14px 20px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  gap: 8px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .brand-title {
@@ -54,6 +62,18 @@ body {
   font-weight: 800;
   color: var(--text-main);
   letter-spacing: 0.01em;
+}
+
+.exp-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #4b5563;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .header-date {
