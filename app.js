@@ -83,41 +83,63 @@ function createArticleCard(article) {
   const card = document.createElement("article");
   card.className = "news-card";
 
-  const summaryItems = (article.surfaceNews.summary || [])
+  const surface = article.surfaceNews || {};
+  const tsukkomi = article.oneLineTsukkomi || {};
+  const hp = article.hiddenPerspectives || {};
+  const blindspot = hp.dataBlindspot || { title: "", points: [] };
+  const beneficiary = hp.beneficiary || null;
+  const counter = hp.counterLogic || { title: "", points: [] };
+  const takeawayText =
+    (article.poll && article.poll.doyaPhrase) ||
+    article.dinnerQuestion ||
+    "";
+
+  const summaryItems = (surface.summary || [])
     .map((line) => `<li>${line}</li>`)
     .join("");
 
-  const blindspotItems = (article.hiddenPerspectives.dataBlindspot.points || [])
+  const blindspotItems = (blindspot.points || [])
     .map((p) => `<li>${p}</li>`)
     .join("");
 
-  const counterItems = (article.hiddenPerspectives.counterLogic.points || [])
+  const beneficiaryBlock =
+    beneficiary && Array.isArray(beneficiary.points) && beneficiary.points.length > 0
+      ? `
+      <div class="perspective-block">
+        <div class="perspective-title">${beneficiary.title || ""}</div>
+        <ul class="perspective-list">
+          ${beneficiary.points.map((p) => `<li>${p}</li>`).join("")}
+        </ul>
+      </div>`
+      : "";
+
+  const counterItems = (counter.points || [])
     .map((p) => `<li>${p}</li>`)
     .join("");
 
   card.innerHTML = `
     <section class="section-surface">
-      <div class="card-category">${article.categoryIcon || ""} ${article.category}</div>
-      <h2 class="surface-headline">${article.surfaceNews.headline}</h2>
+      <div class="card-category">${article.categoryIcon || ""} ${article.category || ""}</div>
+      <h2 class="surface-headline">${surface.headline || ""}</h2>
       <ul class="surface-summary">
         ${summaryItems}
       </ul>
     </section>
 
     <section class="section-tsukkomi">
-      <div class="tsukkomi-label">💡 ${article.oneLineTsukkomi.badge}</div>
-      <p class="tsukkomi-text">${article.oneLineTsukkomi.text}</p>
+      <div class="tsukkomi-label">💡 ${tsukkomi.badge || "ちょっと待って！"}</div>
+      <p class="tsukkomi-text">${tsukkomi.text || ""}</p>
     </section>
 
     <section class="section-perspectives">
       <div class="perspective-block">
-        <div class="perspective-title">${article.hiddenPerspectives.dataBlindspot.title}</div>
+        <div class="perspective-title">${blindspot.title || ""}</div>
         <ul class="perspective-list">
           ${blindspotItems}
         </ul>
-      </div>
+      </div>${beneficiaryBlock}
       <div class="perspective-block">
-        <div class="perspective-title">${article.hiddenPerspectives.counterLogic.title}</div>
+        <div class="perspective-title">${counter.title || ""}</div>
         <ul class="perspective-list">
           ${counterItems}
         </ul>
@@ -126,7 +148,7 @@ function createArticleCard(article) {
 
     <section class="section-takeaway">
       <div class="takeaway-label">💬 視点が変わる一言</div>
-      <p class="takeaway-phrase">${article.poll.doyaPhrase}</p>
+      <p class="takeaway-phrase">${takeawayText}</p>
     </section>
   `;
 
