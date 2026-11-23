@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>てらこやニュース</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20261123" />
 </head>
 <body>
   <div class="app-shell">
@@ -13,11 +13,11 @@
         <h1 class="brand-title">てらこやニュース</h1>
         <span class="exp-badge">AIニュース実験中</span>
       </div>
-      <span class="header-date" id="edition-badge">10月25日（日）</span>
+      <span class="header-date" id="edition-badge"></span>
     </header>
 
     <main class="timeline" id="timeline">
-      <!-- Cards rendered by app.js -->
+      <div class="status-message" id="initial-loading">最新のニュースを読み込んでいます…</div>
     </main>
 
     <div id="scroll-sentinel" class="scroll-sentinel" aria-hidden="true"></div>
@@ -27,6 +27,6 @@
     </footer>
   </div>
 
-  <script src="app.js?v=20261111"></script>
+  <script src="app.js?v=20261123"></script>
 </body>
 </html>

@@ -263,7 +263,14 @@ body {
   line-height: 1.55;
 }
 
-/* Footer */
+/* Footer & Status */
+.status-message {
+  text-align: center;
+  padding: 36px 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
 .app-footer {
   text-align: center;
   padding: 24px 16px;

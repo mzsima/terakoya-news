@@ -1,65 +1,60 @@
-const FALLBACK_DATA = {
-  updatedAt: "2026-10-25T10:03:00+09:00",
-  edition: "10月25日（日）",
-  editions: [
-    {
-      updatedAt: "2026-10-25T10:03:00+09:00",
-      edition: "10月25日（日）",
-      articles: [
-        {
-          id: "classical-music-bgm-grades",
-          category: "学習・データ",
-          categoryIcon: "🎧",
-          surfaceNews: {
-            headline: "「勉強中に『集中力アップBGM・自然音』を流す子は成績が良い！」調査結果から作業用プレイリストが小中高生に大流行",
-            summary: [
-              "学習アプリの調査で、普段の勉強中に「雨の音（環境音）やクラシック音楽」を流している生徒は、無音で勉強する生徒よりも学習時間が長く、テストの平均点も高いという結果が発表されました。",
-              "これを受け、「聴くだけで脳が集中モードになる勉強用BGM」の配信や専用イヤホンが人気を集めています。",
-              "「まずは形から勉強部屋の音楽環境を整えよう」という特集も広がっています。"
-            ]
-          },
-          oneLineTsukkomi: {
-            badge: "ちょっと待って！",
-            text: "「BGMを流したから頭が良くなった」の？それとも『自分の集中できる環境を工夫している意欲の高い子』がBGMを使っているだけ？"
-          },
-          hiddenPerspectives: {
-            dataBlindspot: {
-              title: "📊 データの死角（因果と相関の混同）",
-              points: [
-                "環境音やクラシックを選んでいる層は、そもそも「スマホの通知や歌詞のある曲だと集中が切れる」と自分で気づき、学習環境をコントロールしている自律性の高い生徒が多い（隠れた前提条件）。",
-                "また、暗記や長文読解のときは「どんな音楽でも脳の言語処理メモリ（ワーキングメモリ）を奪うため、無音の方が定着率が高い」という認知心理学の実験結果が平均値の裏で消えている。"
-              ]
-            },
-            counterLogic: {
-              title: "🔍 構造の裏側・副作用",
-              points: [
-                "「BGMさえ流せば集中できる」と誤解して、お気に入りのJ-POPや動画の音声を流しながら勉強すると、脳は音楽と文字の間で高速の切り替え（マルチタスク）を強いられ、かえって疲れやすくなる。",
-                "音楽配信サービスやイヤホンメーカーにとっては「勉強中もずっと再生し続けてもらう」方が再生回数や売上が伸びるため、都合の良いデータだけが強調されやすい。"
-              ]
-            }
-          },
-          poll: {
-            doyaPhrase: "「『勉強用BGMを流すと成績が上がる』って言うけど、音楽のおかげで頭が良くなったんじゃなくて、そもそも『スマホの誘惑を断って集中環境を作れる子』が環境音を選んでるだけじゃない？」"
-          }
-        }
-      ]
-    }
-  ]
-};
-
-const EDITIONS_PER_BATCH = 2; // 最初は2日分（6記事）を描画し、スクロールに合わせて過去分を自動追加
+const EDITIONS_PER_BATCH = 2; // 最初は2日分を描画し、スクロールに合わせて過去分を自動追加
 let allEditions = [];
 let renderedEditionCount = 0;
+let hasArchive = false;
+let archiveLoaded = false;
+let archiveLoading = false;
 let editionObserver = null;
 let sentinelObserver = null;
 
-async function loadArticles() {
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+async function fetchJson(path) {
+  const res = await fetch(path, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to fetch ${path} (${res.status})`);
+  return await res.json();
+}
+
+async function loadInitialData() {
   try {
-    const res = await fetch("./data/articles.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed to fetch articles.json");
-    return await res.json();
-  } catch (e) {
-    return FALLBACK_DATA;
+    const latest = await fetchJson("./data/latest.json");
+    if (Array.isArray(latest.editions) && latest.editions.length > 0) {
+      hasArchive = Boolean(latest.hasArchive);
+      return latest;
+    }
+  } catch (_) {
+    // latest.json が未生成の環境では従来の articles.json にフォールバック
+  }
+
+  hasArchive = false;
+  archiveLoaded = true;
+  return await fetchJson("./data/articles.json");
+}
+
+async function ensureArchiveLoaded() {
+  if (!hasArchive || archiveLoaded || archiveLoading) return;
+  archiveLoading = true;
+  try {
+    const archive = await fetchJson("./data/archive.json");
+    if (Array.isArray(archive.editions) && archive.editions.length > 0) {
+      const existingLabels = new Set(allEditions.map((e) => e.edition));
+      const newEditions = archive.editions.filter(
+        (e) => !existingLabels.has(e.edition)
+      );
+      allEditions = allEditions.concat(newEditions);
+    }
+    archiveLoaded = true;
+  } catch (err) {
+    console.warn("Failed to load archive.json:", err);
+  } finally {
+    archiveLoading = false;
   }
 }
 
@@ -95,51 +90,51 @@ function createArticleCard(article) {
     "";
 
   const summaryItems = (surface.summary || [])
-    .map((line) => `<li>${line}</li>`)
+    .map((line) => `<li>${escapeHtml(line)}</li>`)
     .join("");
 
   const blindspotItems = (blindspot.points || [])
-    .map((p) => `<li>${p}</li>`)
+    .map((p) => `<li>${escapeHtml(p)}</li>`)
     .join("");
 
   const beneficiaryBlock =
     beneficiary && Array.isArray(beneficiary.points) && beneficiary.points.length > 0
       ? `
       <div class="perspective-block">
-        <div class="perspective-title">${beneficiary.title || ""}</div>
+        <div class="perspective-title">${escapeHtml(beneficiary.title || "")}</div>
         <ul class="perspective-list">
-          ${beneficiary.points.map((p) => `<li>${p}</li>`).join("")}
+          ${beneficiary.points.map((p) => `<li>${escapeHtml(p)}</li>`).join("")}
         </ul>
       </div>`
       : "";
 
   const counterItems = (counter.points || [])
-    .map((p) => `<li>${p}</li>`)
+    .map((p) => `<li>${escapeHtml(p)}</li>`)
     .join("");
 
   card.innerHTML = `
     <section class="section-surface">
-      <div class="card-category">${article.categoryIcon || ""} ${article.category || ""}</div>
-      <h2 class="surface-headline">${surface.headline || ""}</h2>
+      <div class="card-category">${escapeHtml(article.categoryIcon || "")} ${escapeHtml(article.category || "")}</div>
+      <h2 class="surface-headline">${escapeHtml(surface.headline || "")}</h2>
       <ul class="surface-summary">
         ${summaryItems}
       </ul>
     </section>
 
     <section class="section-tsukkomi">
-      <div class="tsukkomi-label">💡 ${tsukkomi.badge || "ちょっと待って！"}</div>
-      <p class="tsukkomi-text">${tsukkomi.text || ""}</p>
+      <div class="tsukkomi-label">💡 ${escapeHtml(tsukkomi.badge || "ちょっと待って！")}</div>
+      <p class="tsukkomi-text">${escapeHtml(tsukkomi.text || "")}</p>
     </section>
 
     <section class="section-perspectives">
       <div class="perspective-block">
-        <div class="perspective-title">${blindspot.title || ""}</div>
+        <div class="perspective-title">${escapeHtml(blindspot.title || "")}</div>
         <ul class="perspective-list">
           ${blindspotItems}
         </ul>
       </div>${beneficiaryBlock}
       <div class="perspective-block">
-        <div class="perspective-title">${counter.title || ""}</div>
+        <div class="perspective-title">${escapeHtml(counter.title || "")}</div>
         <ul class="perspective-list">
           ${counterItems}
         </ul>
@@ -148,7 +143,7 @@ function createArticleCard(article) {
 
     <section class="section-takeaway">
       <div class="takeaway-label">💬 視点が変わる一言</div>
-      <p class="takeaway-phrase">${takeawayText}</p>
+      <p class="takeaway-phrase">${escapeHtml(takeawayText)}</p>
     </section>
   `;
 
@@ -165,7 +160,7 @@ function createEditionSection(editionObj, index) {
   if (index > 0) {
     const divider = document.createElement("div");
     divider.className = "edition-divider";
-    divider.innerHTML = `<span class="edition-divider-pill">📅 ${cleanLabel}のニュース</span>`;
+    divider.innerHTML = `<span class="edition-divider-pill">📅 ${escapeHtml(cleanLabel)}のニュース</span>`;
     section.appendChild(divider);
   }
 
@@ -173,16 +168,27 @@ function createEditionSection(editionObj, index) {
   cardsContainer.className = "edition-cards";
 
   (editionObj.articles || []).forEach((article) => {
-    cardsContainer.appendChild(createArticleCard(article));
+    try {
+      cardsContainer.appendChild(createArticleCard(article));
+    } catch (err) {
+      console.error("Failed to render article card:", article && article.id, err);
+    }
   });
 
   section.appendChild(cardsContainer);
   return section;
 }
 
-function renderNextBatch() {
+async function renderNextBatch() {
   const timelineEl = document.getElementById("timeline");
-  if (!timelineEl || renderedEditionCount >= allEditions.length) return;
+  if (!timelineEl) return;
+
+  // 最新分（latest.json）の終端に近づいたら archive.json を自動遅延読み込み
+  if (renderedEditionCount >= allEditions.length && hasArchive && !archiveLoaded) {
+    await ensureArchiveLoaded();
+  }
+
+  if (renderedEditionCount >= allEditions.length) return;
 
   const nextSlice = allEditions.slice(
     renderedEditionCount,
@@ -237,30 +243,42 @@ function setupScrollObservers() {
     sentinelObserver.observe(sentinel);
   } else {
     // IntersectionObserver非対応環境では全件一括描画
-    while (renderedEditionCount < allEditions.length) {
-      renderNextBatch();
-    }
+    (async () => {
+      await ensureArchiveLoaded();
+      while (renderedEditionCount < allEditions.length) {
+        await renderNextBatch();
+      }
+    })();
   }
 }
 
 async function init() {
-  const data = await loadArticles();
-  allEditions = normalizeEditions(data);
-
-  const editionBadge = document.getElementById("edition-badge");
-  if (allEditions.length > 0 && editionBadge) {
-    editionBadge.textContent = (allEditions[0].edition || "")
-      .replace("朝刊エディション", "")
-      .trim();
-  }
-
   const timelineEl = document.getElementById("timeline");
-  if (timelineEl) {
-    timelineEl.innerHTML = "";
-  }
+  const editionBadge = document.getElementById("edition-badge");
 
-  setupScrollObservers();
-  renderNextBatch();
+  try {
+    const data = await loadInitialData();
+    allEditions = normalizeEditions(data);
+
+    if (allEditions.length > 0 && editionBadge) {
+      editionBadge.textContent = (allEditions[0].edition || "")
+        .replace("朝刊エディション", "")
+        .trim();
+    }
+
+    if (timelineEl) {
+      timelineEl.innerHTML = "";
+    }
+
+    setupScrollObservers();
+    await renderNextBatch();
+  } catch (err) {
+    console.error("Failed to initialize timeline:", err);
+    if (timelineEl) {
+      timelineEl.innerHTML =
+        '<div class="status-message">ニュースの読み込みに失敗しました。ページを再読み込みしてください。</div>';
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);
